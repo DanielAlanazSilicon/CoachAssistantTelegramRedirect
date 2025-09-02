@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting to Telegram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f3f4f6;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      p {
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Redirecting to Telegram...</h1>
+      <p>
+        Please wait while we redirect you to the Telegram bot with your
+        authorization code.
+      </p>
+    </div>
+
+    <script>
+      // This function executes immediately when the page loads.
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get the full query string from the current URL
+        const queryString = window.location.search;
+
+        // Create a URLSearchParams object to easily parse the parameters
+        const params = new URLSearchParams(queryString);
+
+        // Get the 'code' and 'state' parameters
+        const code = params.get("code");
+        const state = params.get("state");
+
+        // Log the extracted parameters for debugging purposes
+        console.log("Code:", code);
+        console.log("State:", state);
+
+        // Check if the 'code' parameter exists before proceeding
+        if (code) {
+          // Construct the full message to be sent to Telegram.
+          // This includes the code and state parameters from Google's redirect.
+          // The '&' in the message needs to be encoded, so we build the full message string first.
+          let telegramMessage = `code=${code}`;
+          if (state) {
+            telegramMessage += `&state=${state}`;
+          }
+
+          // Encode the entire message string so it's safe to include in a URL
+          const encodedMessage = encodeURIComponent(telegramMessage);
+
+          // Construct the final Telegram URL with the encoded message
+          const telegramUrl = `https://t.me/CoachAssistantTasksbot?text=${encodedMessage}`;
+
+          // Log the final URL for verification
+          console.log("Redirecting to:", telegramUrl);
+
+          // Redirect the user to the constructed Telegram URL.
+          // We use window.location.replace() to prevent the user from
+          // returning to this intermediate page with the browser's back button.
+          window.location.replace(telegramUrl);
+        } else {
+          // If the 'code' parameter is not present, display an error or handle it gracefully
+          console.error("Authorization code not found in the URL.");
+          document.querySelector("h1").textContent = "Redirection Failed";
+          document.querySelector("p").textContent =
+            "The authorization code was not found. Please try again.";
+        }
+      });
+    </script>
+  </body>
+</html>
