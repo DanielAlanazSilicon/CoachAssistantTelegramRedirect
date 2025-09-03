@@ -40,6 +40,11 @@
         Please wait while we redirect you to the Telegram bot with your
         authorization code.
       </p>
+      <h1>
+        If it Didn't redirect you to telegram please copy this code and paste it
+        to the Telegram Chat:
+      </h1>
+      <p id="auth-code" class="bg-gray-100 p-2 rounded"></p>
     </div>
 
     <script>
@@ -77,7 +82,7 @@
 
           // Log the final URL for verification
           console.log("Redirecting to:", telegramUrl);
-
+          document.getElementById("auth-code").textContent = code;
           // Redirect the user to the constructed Telegram URL.
           // We use window.location.replace() to prevent the user from
           // returning to this intermediate page with the browser's back button.
