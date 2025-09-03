@@ -82,7 +82,7 @@
 
           // Log the final URL for verification
           console.log("Redirecting to:", telegramUrl);
-          document.getElementById("auth-code").textContent = encodedMessage;
+          document.getElementById("auth-code").textContent = telegramMessage;
           // Redirect the user to the constructed Telegram URL.
           // We use window.location.replace() to prevent the user from
           // returning to this intermediate page with the browser's back button.
@@ -98,4 +98,5 @@
     </script>
   </body>
 </html>
+
 
